@@ -1,0 +1,61 @@
+{
+  "name": "expense-tracker-desktop",
+  "productName": "Expense Tracker",
+  "version": "1.1.0",
+  "description": "Expense Tracker desktop app",
+  "author": "Expense Tracker",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "prepare-app": "node scripts/prepare.mjs",
+    "start": "npm run prepare-app && electron .",
+    "dist": "npm run prepare-app && electron-builder --win --publish never",
+    "release": "node scripts/release.mjs"
+  },
+  "devDependencies": {
+    "electron": "44.10.0",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.expensetracker.desktop",
+    "productName": "Expense Tracker",
+    "directories": {
+      "output": "release",
+      "buildResources": "build-resources"
+    },
+    "files": [
+      "main.js",
+      "loading.html",
+      "package.json",
+      "build-resources/icon.png"
+    ],
+    "extraResources": [
+      {
+        "from": "api",
+        "to": "api"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build-resources/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Expense Tracker"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "YOUR_GITHUB_USERNAME",
+        "repo": "expense-tracker",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "6.8.11"
+  }
+}

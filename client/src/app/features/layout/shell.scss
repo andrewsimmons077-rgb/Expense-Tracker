@@ -1,0 +1,208 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 64px;
+  padding: 0 24px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    &.active {
+      background: color-mix(in srgb, var(--primary) 12%, transparent);
+      color: var(--primary);
+    }
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+// Mobile: navigation moves to a fixed bottom tab bar.
+@media (max-width: 720px) {
+  .topbar {
+    padding: 0 16px;
+    gap: 12px;
+    // backdrop-filter makes the header the containing block for fixed children,
+    // which would pin the bottom tab bar to the header instead of the screen.
+    backdrop-filter: none;
+    background: var(--surface);
+  }
+  .brand {
+    flex: 1;
+  }
+  .user-name {
+    display: none;
+  }
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: space-around;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+
+    a {
+      flex-direction: column;
+      gap: 2px;
+      font-size: 0.72rem;
+      padding: 6px 12px;
+    }
+    .nav-icon {
+      font-size: 1.15rem;
+    }
+  }
+  .content {
+    padding: 16px 16px 96px;
+  }
+}
+
+@media (max-width: 380px) {
+  .brand-name {
+    display: none;
+  }
+}
+
+.user {
+  position: relative;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px 4px 4px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover,
+  &[aria-expanded='true'] {
+    background: var(--surface-2);
+  }
+}
+
+.caret {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  min-width: 220px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+
+  a,
+  button {
+    display: block;
+    width: 100%;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.92rem;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--surface-2);
+    }
+  }
+
+  .logout {
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+    border-radius: 0 0 8px 8px;
+
+    &:hover {
+      color: var(--danger);
+      background: color-mix(in srgb, var(--danger) 10%, transparent);
+    }
+  }
+}
+
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+
+  small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

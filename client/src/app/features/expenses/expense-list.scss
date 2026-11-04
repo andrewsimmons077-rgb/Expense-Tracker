@@ -1,0 +1,207 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+
+  .search {
+    flex: 1 1 220px;
+  }
+  select {
+    flex: 0 1 170px;
+  }
+}
+
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.table-card {
+  overflow: hidden;
+  transition: opacity 0.15s;
+  &.loading {
+    opacity: 0.6;
+  }
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  th {
+    background: var(--surface-2);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .num {
+    text-align: right;
+  }
+  tr.overdue {
+    background: color-mix(in srgb, var(--danger) 6%, transparent);
+  }
+  tbody tr:hover {
+    background: var(--surface-2);
+  }
+}
+
+.sort {
+  all: unset;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 600;
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.title-cell {
+  max-width: 280px;
+  .notes {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.amount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.due-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  &.overdue {
+    color: var(--danger);
+    font-weight: 600;
+  }
+}
+
+.actions {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.empty {
+  padding: 48px 16px;
+  text-align: center;
+}
+
+// Mobile: each row becomes a card.
+@media (max-width: 860px) {
+  .filters {
+    select,
+    .search,
+    .date-filter {
+      flex: 1 1 calc(50% - 10px);
+    }
+    .date-filter input {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  .expense-table {
+    thead {
+      display: none;
+    }
+    tr {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 12px;
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0;
+      border: none;
+    }
+    .title-cell {
+      max-width: none;
+      min-width: 0;
+    }
+    .amount {
+      grid-row: 1;
+      grid-column: 2;
+      font-size: 1.05rem;
+    }
+    td[data-label='Category'],
+    td[data-label='Date'],
+    td[data-label='Due'],
+    td[data-label='Status'] {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      &::before {
+        content: attr(data-label);
+        min-width: 70px;
+        color: var(--text-muted);
+        font-size: 0.78rem;
+      }
+    }
+    td[data-label='Due'] {
+      flex-wrap: wrap;
+    }
+    .actions {
+      grid-column: 1 / -1;
+      text-align: left;
+      margin-top: 6px;
+      margin-left: -8px;
+    }
+  }
+}
+
+.repeat-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  vertical-align: 1px;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
