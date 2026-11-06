@@ -13,6 +13,7 @@ Full-stack expense tracker.
 
 - **Auth** – register / login pages, JWT tokens, hashed passwords (ASP.NET Identity `PasswordHasher`), route guards, auto-logout on 401.
 - **Profile menu** – click your name for Profile (name, email, member since, change password), Settings, and Log out. Change your password from the Profile page.
+- **Desktop app download** – a public `/download` page (linked from sign-in, register and Settings) that offers the latest Windows installer from GitHub Releases.
 - **Settings** – light/dark mode toggle, default dashboard chart period (both saved per device), and an Edit button that opens the categories page.
 - **Expenses** – add, edit, delete, "mark as paid"; title, amount, category, date, optional due date, status (Pending / Paid / Cancelled), notes.
 - **Recurring payments** – mark an expense as repeating Monthly or Yearly. When it is marked Paid, the next payment is created automatically as Pending (one month/year later, due date shifted too).
@@ -97,7 +98,9 @@ Installed copies check GitHub Releases for a newer version when they start (and 
 One-time setup:
 
 1. Create a **public** GitHub repository (a private one would need a token built into the app) and push this project to it.
-2. In `desktop/package.json`, set `build.publish[0].owner` to your GitHub username (and `repo` if it isn't `expense-tracker`).
+2. Set your GitHub username (and repository name, if it isn't `expense-tracker`) in two places:
+   - `build.publish[0]` in `desktop/package.json`: where releases are uploaded and where installed copies look for updates.
+   - `DESKTOP_RELEASES` in `client/src/app/core/desktop-app.ts`: where the website's download page finds the installer.
 3. Create a GitHub token that can create releases in that repository: a fine-grained token with **Contents: Read and write**, or a classic token with `repo`. Keep it on your machine only.
 
 Each release:
@@ -113,6 +116,10 @@ Each release:
    ```
 
    This builds the installer and uploads it, with `latest.yml` and the `.blockmap` used for smaller downloads, as a published GitHub release `v<version>`.
+
+### Download page
+
+The website has a public download page at `/download`, linked from the sign-in and register pages and from **Settings → Desktop app**. It asks GitHub for the latest release and offers its installer, with the version, size and install steps. Until the repository is set in `desktop-app.ts` it says downloads aren't available yet. Inside the desktop app itself these links are hidden. The desktop app keeps its own data, so people create a new account in it; the page says so.
 
 Copies installed from a build made before the updater was added (1.0.0) can't update themselves; install the new version over them once. Updates aren't code-signed, so SmartScreen may warn when an update installs until the app is signed.
 

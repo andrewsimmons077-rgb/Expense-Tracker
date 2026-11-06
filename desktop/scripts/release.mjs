@@ -15,6 +15,14 @@ const fail = (msg) => {
 };
 if (target.owner === 'YOUR_GITHUB_USERNAME')
   fail('Set build.publish owner (and repo) in desktop/package.json to your GitHub repository first.');
+// The website's download page reads the same repository.
+const siteConfig = readFileSync(join(desktopDir, '..', 'client', 'src', 'app', 'core', 'desktop-app.ts'), 'utf8');
+if (!siteConfig.includes(`owner: '${target.owner}'`) || !siteConfig.includes(`repo: '${target.repo}'`))
+  console.warn(
+    `
+Note: client/src/app/core/desktop-app.ts doesn't point at ${target.owner}/${target.repo}, so the website's download page won't find this release.
+`,
+  );
 if (!process.env.GH_TOKEN)
   fail('Set GH_TOKEN to a GitHub token that can create releases in ' + `${target.owner}/${target.repo}` + ' first.');
 

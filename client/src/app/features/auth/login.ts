@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '../../core/auth/auth.store';
+import { isDesktopApp } from '../../core/desktop-app';
 
 @Component({
   selector: 'app-login',
@@ -39,11 +40,15 @@ import { AuthStore } from '../../core/auth/auth.store';
         </button>
 
         <p class="switch">No account yet? <a routerLink="/register" (click)="auth.clearError()">Create one</a></p>
+        @if (!inDesktopApp) {
+          <p class="switch"><a routerLink="/download">Get the Windows app</a></p>
+        }
       </form>
     </main>
   `,
 })
 export class LoginPage {
+  protected readonly inDesktopApp = isDesktopApp();
   protected readonly auth = inject(AuthStore);
   readonly returnUrl = input<string>('/');
 

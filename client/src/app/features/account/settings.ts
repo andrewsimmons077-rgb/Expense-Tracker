@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { PreferencesStore } from '../../core/preferences.store';
+import { isDesktopApp } from '../../core/desktop-app';
 import { RouterLink } from '@angular/router';
 import { CategoriesStore } from '../../state/categories.store';
 import { RANGES, RangeKey } from '../dashboard/spending-periods';
@@ -61,11 +62,25 @@ import { RANGES, RangeKey } from '../dashboard/spending-periods';
         <a class="btn btn-ghost btn-outline" routerLink="/settings/categories">Edit</a>
       </div>
     </section>
+
+    @if (!inDesktopApp) {
+      <section class="card section">
+        <h2>Desktop app</h2>
+        <div class="setting-row">
+          <div>
+            <strong>Expense Tracker for Windows</strong>
+            <small class="muted">Use Expense Tracker in its own window, even offline. It updates itself.</small>
+          </div>
+          <a class="btn btn-ghost btn-outline" routerLink="/download">Download</a>
+        </div>
+      </section>
+    }
   `,
 })
 export class SettingsPage {
   protected readonly prefs = inject(PreferencesStore);
   protected readonly ranges = RANGES;
+  protected readonly inDesktopApp = isDesktopApp();
   private readonly categories = inject(CategoriesStore);
   protected readonly categoryCount = computed(() => this.categories.items().length);
 

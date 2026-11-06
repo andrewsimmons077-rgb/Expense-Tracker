@@ -15,6 +15,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/register').then((m) => m.RegisterPage),
   },
   {
+    // Public: reachable whether or not you're signed in.
+    path: 'download',
+    title: 'Download · Expense Tracker',
+    loadComponent: () => import('./features/download/download').then((m) => m.DownloadPage),
+  },
+  {
     path: '',
     canActivate: [authGuard],
     loadComponent: () => import('./features/layout/shell').then((m) => m.Shell),

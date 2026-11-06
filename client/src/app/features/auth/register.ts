@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '../../core/auth/auth.store';
+import { isDesktopApp } from '../../core/desktop-app';
 
 function passwordsMatch(group: AbstractControl): ValidationErrors | null {
   return group.get('password')?.value === group.get('confirm')?.value ? null : { mismatch: true };
@@ -59,11 +60,15 @@ function passwordsMatch(group: AbstractControl): ValidationErrors | null {
         </button>
 
         <p class="switch">Already registered? <a routerLink="/login" (click)="auth.clearError()">Sign in</a></p>
+        @if (!inDesktopApp) {
+          <p class="switch"><a routerLink="/download">Get the Windows app</a></p>
+        }
       </form>
     </main>
   `,
 })
 export class RegisterPage {
+  protected readonly inDesktopApp = isDesktopApp();
   protected readonly auth = inject(AuthStore);
 
   protected readonly form = inject(FormBuilder).nonNullable.group(

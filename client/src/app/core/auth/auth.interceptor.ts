@@ -6,7 +6,8 @@ import { AuthStore } from './auth.store';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthStore);
   const token = auth.token();
-  const authed = token ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
+  // Only our own API gets the token, never another site (e.g. GitHub).
+  const authed = token && req.url.startsWith('/api/') ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
 
   return next(authed).pipe(
     catchError((err: unknown) => {
