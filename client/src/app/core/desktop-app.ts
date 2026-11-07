@@ -2,7 +2,7 @@
  * Where the Windows desktop app is published. Keep in sync with build.publish in desktop/package.json,
  * which is where the installer is uploaded by `npm run release`.
  */
-export const DESKTOP_RELEASES = { owner: 'YOUR_GITHUB_USERNAME', repo: 'expense-tracker' };
+export const DESKTOP_RELEASES = { owner: 'andrewsimmons077-rgb', repo: 'Expense-Tracker' };
 
 /** False until the GitHub repository above has been filled in. */
 export const desktopDownloadsConfigured = DESKTOP_RELEASES.owner !== 'YOUR_GITHUB_USERNAME';

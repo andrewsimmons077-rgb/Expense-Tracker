@@ -49,8 +49,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "YOUR_GITHUB_USERNAME",
-        "repo": "expense-tracker",
+        "owner": "andrewsimmons077-rgb",
+        "repo": "Expense-Tracker",
         "releaseType": "release"
       }
     ]
